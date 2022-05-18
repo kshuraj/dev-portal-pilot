@@ -20,6 +20,7 @@ def run_model(image):
     """
     Example taken from: https://huggingface.co/spaces/keras-io/Enhance_Low_Light_Image/tree/main
     """
+    
     output_path = os.path.join('static/images')
     pathlib.Path(output_path).mkdir(parents=True, exist_ok=True) 
     image = Image.open(image)
