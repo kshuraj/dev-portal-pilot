@@ -16,7 +16,7 @@ import imageio
 import torch
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
-from BLIP.models.blip import blip_decoder
+from models.blip import blip_decoder
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -34,7 +34,7 @@ def run_model(image):
 
     model_url = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model*_base_caption.pth'
         
-    model = blip_decoder(pretrained=model_url, image_size=384, vit='base')
+    model = blip_decoder(pretrained=model_url, image_size=384, vit='base',med_config='BLIP/configs/med_config.json')
     model.eval()
     model = model.to(device)
     
@@ -43,6 +43,7 @@ def run_model(image):
     timage = transform(image).unsqueeze(0).to(device) 
     with torch.no_grad():
         caption = model.generate(timage, sample=False, num_beams=3, max_length=20, min_length=5)
+        print(caption[0])
         return caption[0]
 
 def main(input_image):
@@ -53,5 +54,5 @@ def main(input_image):
     output = run_model(input_image)
     return output
 
-# if __name__=="__main__":
-#     main('download.jpg')
+if __name__=="__main__":
+    main('download.jpg')
