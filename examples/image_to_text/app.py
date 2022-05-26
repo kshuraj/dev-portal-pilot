@@ -43,7 +43,7 @@ def run_model(image):
     timage = transform(image).unsqueeze(0).to(device) 
     with torch.no_grad():
         caption = model.generate(timage, sample=False, num_beams=3, max_length=20, min_length=5)
-        print(caption[0])
+        # print(caption[0])
         return caption[0]
 
 def main(input_image):
@@ -54,5 +54,5 @@ def main(input_image):
     output = run_model(input_image)
     return output
 
-if __name__=="__main__":
-    main('download.jpg')
+# if __name__=="__main__":
+#     main('download.jpg')
