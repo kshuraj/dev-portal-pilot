@@ -1,9 +1,3 @@
-"""
-Hello World:
-A small program to demonstrate how the app package is supposed to be organised.
-Here we've used 'gpt2' model from HuggingFace to generate text for user's
-input.
-"""
 from transformers import pipeline
 import sys
 sys.path.append("BLIP")
