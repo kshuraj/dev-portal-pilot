@@ -1,9 +1,3 @@
-"""
-Hello World:
-A small program to demonstrate how the app package is supposed to be organised.
-Here we've used 'gpt2' model from HuggingFace to generate text for user's
-input.
-"""
 from transformers import pipeline
 import sys
 sys.path.append("CMFNet_deblurring")
@@ -16,9 +10,6 @@ from PIL import Image
 import imageio
 
 def run_model(image):
-    """
-    Example taken from: https://huggingface.co/gpt2#how-to-use
-    """
     input_path = os.path.join('static/images/input')
     output_path = os.path.join('static/images')
     pathlib.Path(input_path).mkdir(parents=True, exist_ok=True)
