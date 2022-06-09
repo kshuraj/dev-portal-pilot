@@ -4,3 +4,6 @@ venv
 .vscode
 models
 static
+test.pt
+JoJoGAN
+mona.png
