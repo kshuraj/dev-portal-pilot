@@ -4,3 +4,5 @@ venv
 .vscode
 models
 static
+download.png
+CMFNet_deblurring
