@@ -173,12 +173,12 @@ def run_model(image,model):
     return output_file
 
 
-def main(input_image,model):
+def main(input_image,selection):
     """
     Argument(s) name in the function signature are matching with the id in the
     app.config
     """
-    output = run_model(input_image,model)
+    output = run_model(input_image,selection)
     return output
 
 
