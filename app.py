@@ -24,8 +24,8 @@ def main(input_image):
     app.config
     """
     output = run_model(input_image)
-    print(output)
+#     print(output)
     return output
 
-if __name__=="__main__":
-    main('download.jpg')
+# if __name__=="__main__":
+#     main('download.jpg')
