@@ -1,35 +1,16 @@
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-import numpy as np
-from PIL import Image
-import keras
-from huggingface_hub import from_pretrained_keras
-# from io import BytesIO
-import imageio
-import pathlib
-
-model = from_pretrained_keras("keras-io/lowlight-enhance-mirnet", compile=False)
+from transformers import pipeline,DetrFeatureExtractor, DetrForSegmentation
 
 def run_model(image):
-    
-    output_path = os.path.join('static/images')
-    pathlib.Path(output_path).mkdir(parents=True, exist_ok=True) 
-    image = Image.open(image)
-    image = image.resize((960,640))
-    image = keras.preprocessing.image.img_to_array(image)
-    image = image.astype("float32") / 255.0
-    image = np.expand_dims(image, axis=0)
-    output = model.predict(image)
-    output_image = output[0] * 255.0
-    output_image = output_image.clip(0, 255)
-    output_image = output_image.reshape(
-        (np.shape(output_image)[0], np.shape(output_image)[1], 3)
-    )
-    output_image = np.uint32(output_image)
-    output_image = output_image.astype(np.uint8)
-    output_file = os.path.join(output_path, 'output.jpeg')
-    imageio.imwrite(output_file, output_image)
-    return output_file
+    feature_extractor = DetrFeatureExtractor.from_pretrained('facebook/detr-resnet-50-panoptic')
+    model = DetrForSegmentation.from_pretrained('facebook/detr-resnet-50-panoptic')
+
+    pipe = pipeline('image-segmentation',model=model,feature_extractor=feature_extractor)
+    output = pipe(image)
+    my_dict = []
+    for out in output:
+        adds = {'score':out["score"],'label':out["label"]}
+        my_dict.append(adds)
+    return my_dict
 
 def main(input_image):
     """
@@ -37,7 +18,9 @@ def main(input_image):
     app.config
     """
     output = run_model(input_image)
+    print(output)
     return output
 
 if __name__=="__main__":
-    main('download.png')
+    main('dev-portal-pilot/download.jpg')
+
